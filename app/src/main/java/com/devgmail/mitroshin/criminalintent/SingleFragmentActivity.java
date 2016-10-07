@@ -5,7 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
-public class CrimeActivity extends FragmentActivity {
+/**
+ * Created by Dmitry on 07.10.2016.
+ */
+
+public abstract class SingleFragmentActivity extends FragmentActivity {
+
+    // Метод, используемый для создания экземпляра фрагмента
+    // Субклассы данного класса реализуют этот метод так, чтобы он возвращал экземпляр фрагмента,
+    // хостом которого является активность
+    protected abstract Fragment createFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +26,7 @@ public class CrimeActivity extends FragmentActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
         if (fragment == null) {
-            fragment = new CrimeFragment();
+            fragment = createFragment();
             // Создает и закрепляет транзакцию фрагмента
             // Т.е. указываем идентификатор контейнерного представления и экземпляра фрагмента
             fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
